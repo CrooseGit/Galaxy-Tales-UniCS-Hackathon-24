@@ -1,6 +1,8 @@
 import '../styles.css'
+
 const NavBar = () => {
     return (
+        
         <nav className="navbar navbar-expand-lg navbar-light ">
         <a className="navbar-brand navtxt" href="#">Navbar</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,13 +17,17 @@ const NavBar = () => {
             <li className="nav-item">
                 <a className="nav-link navtxt" href="#">Link</a>
             </li>
-            
-            <li className="nav-item">
-                <a className="nav-link disabled navtxt" href="#">Disabled</a>
+            <li className="nav-item dropdown">
+                <div className="dropdown">
+                    <button className="dropbtn">Dropdown</button>
+                    <div className="dropdown-content">
+                        <a href="abc">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
             </li>
             </ul>
-                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </div>
         </nav>
     )
