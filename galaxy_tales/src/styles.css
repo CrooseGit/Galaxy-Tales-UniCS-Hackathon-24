@@ -1,75 +1,79 @@
 .navbar {
-    background-color: #392F5A;
-    width: 100%;
+  background-color: #392f5a;
+  width: 100%;
 }
-  
+
 .navtxt {
-    color: #95B2B8;
+  color: #95b2b8;
 }
-
-
 
 .cont {
-    height:80vh
+  height: 80vh;
 }
 .article {
-    width: 60%;
-    height: 100%;
-    background-color: #533A71;
-  }
+  width: 60%;
+  height: 100%;
+  background-color: #533a71;
+}
 
 .reccontainer {
-    width: 97%;
-    height: 33%;
-    background-color: #533A71;
+  width: 97%;
+  height: 33%;
+  background-color: #533a71;
+  padding: 1rem;
+}
+.reccontainer:hover {
+  background-color: #694f89;
+  box-shadow: black solid 1rem 1rem;
 }
 
 .articletxt {
-    font-size: 1.8vw;
+  font-size: 1.8vw;
 }
 
-
 img {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 .dropbtn {
-    background-color: #392F5A;
-    color: #95B2B8;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #392F5A;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: #95B2B8;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {background-color: #433a61}
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  .dropdown:hover .dropbtn {
-    background-color: #433a61;
-  }
+  background-color: #392f5a;
+  color: #95b2b8;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #392f5a;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #95b2b8;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #433a61;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #433a61;
+}
