@@ -1,9 +1,11 @@
 import { launch } from "puppeteer";
 import * as cheerio from "cheerio";
+import axios from "axios";
 
-type ResultsArray = string[];
+// type ResultsArray = string[];
 
-const scrapeSite = async (url: string) => {
+const scrapeSite = async (url) => {
+  //: string
   try {
     const browser = await launch({ headless: true });
     const page = await browser.newPage();
@@ -21,8 +23,9 @@ const scrapeSite = async (url: string) => {
   }
 };
 
-const getURLs = async ($: any) => {
-  const urls: string[] = [];
+const getURLs = async ($) => {
+  //: any
+  const urls = []; // : string[]
   $(".site-content .main-content > article").each((_, el) => {
     const $article = $(el);
     const url = $article.find(".entry-container h2.entry-title a").attr("href");
@@ -33,7 +36,8 @@ const getURLs = async ($: any) => {
   return urls;
 };
 
-const getData = async ($: any) => {
+const getData = async ($) => {
+  //: any
   try {
     const title = $("main.site-main h1.entry-title").text().trim();
     const author = $("span.vcard > a.url").text().trim();
@@ -61,19 +65,21 @@ const getData = async ($: any) => {
   }
 };
 
-function delay(ms: number) {
+function delay(ms) {
+  //: number
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const process = async (urls: string[]) => {
+const process = async (urls) => {
+  //: string[]
   try {
-    const l: string[] = [];
+    const l = []; //: string[]
     for (let url of urls) {
       const getAll = await scrapeSite(url);
       const urlList = await getURLs(getAll);
       l.push(urlList);
     }
-    const listOfStrings: string[] = l.flat().map((url) => url.toString());
+    const listOfStrings = l.flat().map((url) => url.toString()); //: string[]
     console.log(listOfStrings); // working fine...
 
     const data = [{}];
@@ -91,9 +97,11 @@ const process = async (urls: string[]) => {
         photoURL: results[3],
         content: results[4],
       });
-      console.log(data);
     }
-    // console.log(data);
+    // if (data !== "") {
+    //   return data;
+    // }
+    return data;
   } catch (error) {
     console.log("error: ", error);
   }
@@ -105,31 +113,65 @@ let mainURLs = [
   "https://spacenews.com/section/news-archive/page/3/",
 ];
 
-process(mainURLs);
+// const scrapeData = process(mainURLs);
 
-// DATABASES = {
-//   'default': {
-//     'ENGINE': 'django.db.backends.postgresql',
-//     'NAME': 'articledb',
-//     'USER': 'articledb_owner',
-//     'PASSWORD': 'XsVBrHlW3t8C',
-//     'HOST': 'ep-solitary-wave-a23ptxbh.eu-central-1.aws.neon.tech',
-//     'PORT': 5432,
-//     'OPTIONS': {
-//       'sslmode': 'require',
-//     },
-//   }
+// interface ScrapeData {
+//   id: number;
+//   url: string;
+//   title: string;
+//   author: string;
+//   releasedDate: string;
+//   photoURL: string;
+//   content: string;
 // }
 
-// import axios from 'axios';
+const scrapeData = process(mainURLs).then(() => {
+  for (const data of scrapeData) {
+    const requestData = {
+      title: data.title,
+      pub_date: data.releasedDate,
+      source_url: data.url,
+      author: data.author,
+      content: data.content,
+      image_url: data.photoURL,
+    };
 
-// const jsonData = {
-// };
+    axios
+      .post("http://10.205.87.190:8000/articles_api/addRawArticle", requestData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+}); //: ScrapeData[]
 
-// axios.post('/api/save-data/', jsonData)
-//     .then(response => {
-//         console.log(response.data);
+// for (const data of scrapeData) {
+//   const requestData = {
+//     title: data.title,
+//     pub_date: data.releasedDate,
+//     source_url: data.url,
+//     author: data.author,
+//     content: data.content,
+//     image_url: data.photoURL,
+//   };
+
+//   axios
+//     .post("http://10.205.87.190:8000/articles_api/addRawArticle", requestData)
+//     .then((response) => {
+//       console.log(response.data);
 //     })
-//     .catch(error => {
-//         console.error(error);
+//     .catch((error) => {
+//       console.error(error);
 //     });
+// }
+
+// title = models.TextField()
+//     pub_date = models.DateTimeField()
+//     source_url = models.URLField()
+//     author= models.TextField()
+//     content = models.TextField()
+//     image_url = models.URLField()
+
+// http://10.205.87.190:8000/articles_api/addRawArticle
