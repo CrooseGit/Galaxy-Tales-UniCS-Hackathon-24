@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from articles_api.models import *
-from backend.articles_api.serializer import SimpleArticleSerializer
+from articles_api.serializer import SimpleArticleSerializer
 
 # Create your views here.
 @api_view(['POST'])

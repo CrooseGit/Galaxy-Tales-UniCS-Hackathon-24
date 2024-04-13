@@ -9,7 +9,7 @@ class RawArticle(models.Model):
     author= models.TextField()
     content = models.TextField()
     image_url = models.URLField()
-    translate_complete = models.BooleanField(default=False);
+    translate_complete = models.BooleanField(default=False)
 
 class SimpleArticle(models.Model):
     simple_type = models.TextField();
