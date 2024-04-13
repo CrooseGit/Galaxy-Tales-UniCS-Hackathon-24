@@ -1,34 +1,20 @@
 import '../styles.css'
-
+import spcimg from '../assets/space.png'
 const NavBar = () => {
     return (
-        
-        <nav className="navbar navbar-expand-lg navbar-light ">
-        <a className="navbar-brand navtxt" href="#">Navbar</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
-            <li className="nav-item active">
-                <a className="nav-link navtxt" href="#">Home <span className="sr-only">(current)</span></a>
-            </li>
-            <li className="nav-item">
-                <a className="nav-link navtxt" href="#">Link</a>
-            </li>
-            <li className="nav-item dropdown">
-                <div className="dropdown">
-                    <button className="dropbtn">Dropdown</button>
-                    <div className="dropdown-content">
-                        <a href="abc">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
+        <nav className="navbar navbar-expand-lg navbar-light d-flex">
+            <a className="navbar-brand navtxt navcon" href="#">Galaxy Tales</a>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                <img src={spcimg} className='img-fluid w-25 navcon'></img>
+                    <div className="dropdown navtxt navcon">
+                        <button className="dropbtn ">Age Group</button>
+                        <div className="dropdown-content">
+                            <a href="abc">Primary</a>
+                            <a href="#">Secondary</a>
+                            <a href="#">Adults</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-            </ul>
-        </div>
+            </div>
         </nav>
     )
 }

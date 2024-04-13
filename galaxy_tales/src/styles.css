@@ -5,12 +5,14 @@
   
 .navtxt {
     color: #95B2B8;
+    font-size:4vh;
 }
 
 
 
 .cont {
-    height:80vh
+    height:80vh;
+    color: #EAB464;
 }
 .article {
     width: 60%;
@@ -20,7 +22,7 @@
 
 .reccontainer {
     width: 97%;
-    height: 33%;
+    height: 31%;
     background-color: #533A71;
 }
 
@@ -37,14 +39,11 @@ img {
 .dropbtn {
     background-color: #392F5A;
     color: #95B2B8;
-    padding: 16px;
-    font-size: 16px;
     border: none;
     cursor: pointer;
   }
   
   .dropdown {
-    position: relative;
     display: inline-block;
   }
   
@@ -71,5 +70,13 @@ img {
   }
   
   .dropdown:hover .dropbtn {
-    background-color: #433a61;
+    color: #748c91;
   }
+.navbar {
+    max-height: 5%;
+}
+
+.navcon {
+    margin-right: 33%; 
+    margin-left: 1%;
+}
