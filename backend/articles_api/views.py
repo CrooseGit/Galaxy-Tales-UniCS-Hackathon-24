@@ -24,24 +24,34 @@ def index(request):
 def run():
     print('ran')
 
+def convert_Article():
+    set(RawArticle.objects.all()[RawArticle.objects.last()])
+    RawArticle.objects.last().update(translate_complete = False)
+
+
+
 def create_LLM_Article():
-    SimpleArticle.objects.all().delete()
+    
     for i in range(RawArticle.objects.count()):
-        set(RawArticle.objects.all()[i])
+        if RawArticle.objects.all()[i].translate_complete== False:
+            SimpleArticle.objects.all()[i].delete()
+            set(RawArticle.objects.all()[i])
+            RawArticle.objects.all()[i].translate_complete = True
+            RawArticle.objects.all()[i].save()
 
         
 #0,4
 def set(i):
     title = get_primary_title(i.title,i.content)
-    time.sleep(1)
+    time.sleep(4)
     content = get_primary_article(i.title,i.content)
     SimpleArticle.objects.create(simple_type= "primary",original_article=i,source_url=i.source_url ,title=title,pub_date=i.pub_date,author=i.author,content=content, image_url = i.image_url)
     title = get_secondary_title(i.title,i.content)
-    time.sleep(1)
+    time.sleep(4)
     content = get_secondary_article(i.title,i.content)
     SimpleArticle.objects.create(simple_type= "secondary",original_article=i,source_url=i.source_url ,title=title,pub_date=i.pub_date,author=i.author,content=content, image_url = i.image_url)
     title = get_lazy_title(i.title,i.content)
-    time.sleep(1)
+    time.sleep(4)
     content = get_lazy_article(i.title,i.content)
     SimpleArticle.objects.create(simple_type= "lazy",original_article=i,source_url=i.source_url ,title=title,pub_date=i.pub_date,author=i.author,content=content, image_url = i.image_url)
 
@@ -62,6 +72,7 @@ def get_primary_title(title, article):
     # Return: primary title
     prompt = ("Create a single short 'for kids' Title for this article: \n"  +article )
     primary_title = get_chat_response(chat, prompt)
+    primary_title = primary_title.split("\n")[0]
     return primary_title
 
 def get_secondary_article(title, article):
@@ -76,6 +87,7 @@ def get_secondary_title(title, article):
     # Return: secondary title
     prompt = ("Generate a shortened for secondary level version of the Title and only the title of this article:  \n"  +article)
     secondary_title = get_chat_response(chat, prompt)
+    secondary_title = secondary_title.split("\n")[0]
     return secondary_title
 
 def get_lazy_article(title,article):
@@ -90,4 +102,5 @@ def get_lazy_title(title,article):
     # Return: lazy article
     prompt = ("Generate a summarised version of the Title and only the title of this article:  \n" + article)
     lazy_title = get_chat_response(chat, prompt)
+    lazy_title = lazy_title.split("\n")[0]
     return lazy_title
