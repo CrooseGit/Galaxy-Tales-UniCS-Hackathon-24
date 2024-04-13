@@ -4,3 +4,8 @@ from django.http import HttpResponse
 
 def index(request):
     return HttpResponse("Hello World")
+
+#>>> from articles_api import views
+#>>> views.run() 
+def run():
+    print('ran')

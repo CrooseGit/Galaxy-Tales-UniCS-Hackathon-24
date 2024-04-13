@@ -12,7 +12,7 @@ class RawArticle(models.Model):
     translate_complete = models.BooleanField(default=False);
 
 class SimpleArticle(models.Model):
-    target_age = models.IntegerField()
+    simple_type = models.TextField();
     original_article = models.ForeignKey(RawArticle, on_delete=models.CASCADE)
     source_url = models.URLField()    
     title = models.TextField()
