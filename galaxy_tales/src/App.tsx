@@ -7,7 +7,7 @@ function App() {
   const getRecommendations = (article: number) => {
     console.log(article);
     return [
-      { title: '', content: '' },
+      { title: 'The Absolute Gall of this Rover', content: '' },
       { title: '', content: '' },
       { title: '', content: '' },
     ];

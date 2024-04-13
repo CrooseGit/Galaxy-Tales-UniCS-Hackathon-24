@@ -12,7 +12,7 @@ const RecContainer = ({ title, content }: Props) => {
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, quaerat ex. Maiores, esse, libero itaque iure ab magnam laboriosam aut adipisci perferendis quisquam quod qui tempore perspiciatis consequatur impedit praesentium!';
   }
   return (
-    <div className='reccontainer rounded my-3'>
+    <div className='reccontainer rounded mt-3 p-2'>
       <h2>{title}</h2>
       <p>
         {content.substring(0, content.length < 200 ? content.length - 1 : 199) +
