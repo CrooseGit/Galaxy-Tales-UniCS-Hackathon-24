@@ -10,7 +10,7 @@ interface fullArticle {
   simple_type: string;
   title: string;
   content: string;
-  date_pub: Date;
+  pub_date: string;
   source_url: string;
   author: string;
   image_url: string;
@@ -23,7 +23,7 @@ function App() {
     title: 'title',
     simple_type: 'string',
     content: 'string',
-    date_pub: new Date(),
+    pub_date: 'new Date()',
     source_url: 'string',
     author: 'string',
     image_url: 'string',
@@ -34,7 +34,7 @@ function App() {
       title: 'title',
       simple_type: 'string',
       content: 'string',
-      date_pub: new Date(),
+      pub_date: 'new Date()',
       source_url: 'string',
       author: 'string',
       image_url: 'string',
@@ -44,7 +44,7 @@ function App() {
       title: 'title',
       simple_type: 'string',
       content: 'string',
-      date_pub: new Date(),
+      pub_date: 'new Date()',
       source_url: 'string',
       author: 'string',
       image_url: 'string',
@@ -54,7 +54,7 @@ function App() {
       title: 'title',
       simple_type: 'string',
       content: 'string',
-      date_pub: new Date(),
+      pub_date: 'new Date(',
       source_url: 'string',
       author: 'string',
       image_url: 'string',
@@ -84,7 +84,7 @@ function App() {
           simple_type: response.data.simple_type,
           title: response.data.title,
           content: response.data.content,
-          date_pub: response.data.date_pub,
+          pub_date: response.data.pub_date,
           source_url: response.data.source_url,
           author: response.data.author,
           image_url: response.data.image_url,
@@ -108,7 +108,7 @@ function App() {
           simple_type: response.data.simple_type,
           title: response.data.title,
           content: response.data.content,
-          date_pub: response.data.date_pub,
+          pub_date: response.data.pub_date,
           source_url: response.data.source_url,
           author: response.data.author,
           image_url: response.data.image_url,
@@ -132,7 +132,7 @@ function App() {
           simple_type: response.data.simple_type,
           title: response.data.title,
           content: response.data.content,
-          date_pub: response.data.date_pub,
+          pub_date: response.data.pub_date,
           source_url: response.data.source_url,
           author: response.data.author,
           image_url: response.data.image_url,
@@ -159,9 +159,6 @@ function App() {
       });
   };
 
-  const backgroundclr = 'bg-' + ageGroup;
-  console.log(backgroundclr);
-
   return (
     <>
       <NavBar setAgeGroup={setAgeGroup} ageGroup={ageGroup} />
@@ -170,8 +167,21 @@ function App() {
           <div className='text-center'>
             <img src={currentArticle.image_url} className='rounded mb-3'></img>
           </div>
-          <h1>{currentArticle.title}</h1>
-          <p className='articletxt'>{currentArticle.content}</p>
+          <h1 className='overflow-auto titleCont'>
+            <a
+              href={currentArticle.source_url}
+              className='currentTitle overflow-auto'
+            >
+              {currentArticle.title}
+            </a>
+          </h1>
+          <p className='extras d-flex'>
+            <div className='me-5'>{currentArticle.author}</div>
+            <div className='ms-5'>
+              Time Accessed: {currentArticle.pub_date.substring(0, 10)}
+            </div>
+          </p>
+          <p className='articletxt overflow-auto'>{currentArticle.content}</p>
         </div>
         <div className='w-50 h-100 d-flex flex-column'>
           {nextArticles.map((article: fullArticle, index) => (
@@ -182,6 +192,7 @@ function App() {
               onClick={(id) => getArticle(id)}
               key={'article' + index}
               id={article.id}
+              ageGroup={ageGroup}
             />
           ))}
         </div>
