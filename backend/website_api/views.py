@@ -7,24 +7,16 @@ from articles_api.serializer import SimpleArticleSerializer
 
 # Create your views here.
 @api_view(['POST'])
-def getRecentArticles(request):
+def getRecentArticle(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
 
     simple_type = body['simple_type']
-
-    if 'quantity' in body:
-        quantity = body['quantity']        
-    else:
-        quantity = 5
     
-    articles = SimpleArticle.objects.filter(simple_type=simple_type).order_by('-id')
-    if articles.count() < quantity:
-        quantity = articles.count()
+    article = list(SimpleArticle.objects.filter(simple_type=simple_type).order_by('id'))[0]
 
-    articles = articles[:quantity]
     
-    serialized = SimpleArticleSerializer(serialized, many=True)
+    serialized = SimpleArticleSerializer(article)
 
     return JsonResponse(serialized.data, safe=False)
 
@@ -33,20 +25,37 @@ def getNextArticles(request):
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
 
-    simple_type = body['simple_type']
-    current_article_id = body['current_article']
+    print(body)
+    current_article_id = body['id']
+    print('here')
+    current_article = SimpleArticle.objects.get(id=current_article_id)
+    print('there')
+    simple_type = current_article.simple_type
 
     if 'quantity' in body:
         quantity = body['quantity']        
     else:
         quantity = 5
     
-    next_article = SimpleArticle.objects.filter(simple_type=simple_type,id_gte=current_article_id).order_by('-id')
+    next_article = SimpleArticle.objects.filter(simple_type=simple_type,id__gt=current_article_id).order_by('id')
     if next_article.count() < quantity:
         quantity = next_article.count()
 
+
     next_article = next_article[:quantity]
     
-    serialized = SimpleArticleSerializer(serialized, many=True)
+    serialized = SimpleArticleSerializer(next_article, many=True)
+
+    return JsonResponse(serialized.data, safe=False)
+
+@api_view(['POST'])
+def getArticle(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+
+    article_id = body['id']
+    article = SimpleArticle.objects.get(id=article_id)    
+    
+    serialized = SimpleArticleSerializer(article, many=False)
 
     return JsonResponse(serialized.data, safe=False)
