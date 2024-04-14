@@ -100,7 +100,7 @@ const process = async (urls) => {
       });
     }
     // console.log(data);
-    await Bun.write("data.json", JSON.stringify(data));
+    // await Bun.write("data.json", JSON.stringify(data));
     return data;
   } catch (error) {
     console.log("error: ", error);
@@ -133,25 +133,28 @@ console.log(mainuu);
 // await Bun.write("data.json", JSON.stringify(mainuu));
 // console.log(mainuu);
 
-// mainuu.forEach(async (data) => {
-//   const requestData = {
-//     title: data.title,
-//     pub_date: data.releasedDate,
-//     source_url: data.url,
-//     author: data.author,
-//     content: data.content,
-//     image_url: data.photoURL,
-//   };
+mainuu.forEach(async (data) => {
+  const requestData = {
+    title: data.title,
+    pub_date: data.releasedDate,
+    source_url: data.url,
+    author: data.author,
+    content: data.content,
+    image_url: data.photoURL,
+  };
 
-//   const res = await fetch("http://127.0.0.1:8000/articles_api/addRawArticle/", {
-//     method: "POST",
-//     headers: {
-//       CSRF_COOKIE: "wy2qXFJY0n96hpAMo6xSJwRfRaqDEqgg",
-//     },
-//     body: JSON.stringify(requestData),
-//   });
-//   console.log(res.status);
-// });
+  const res = await fetch(
+    "http://127.0.0.1:8000/admin/articles_api/rawarticle/",
+    {
+      method: "POST",
+      headers: {
+        CSRF_COOKIE: "wy2qXFJY0n96hpAMo6xSJwRfRaqDEqgg",
+      },
+      body: JSON.stringify(requestData),
+    }
+  );
+  console.log(res.status);
+});
 
 // http://127.0.0.1:8000/admin/articles_api/rawarticle/
 
