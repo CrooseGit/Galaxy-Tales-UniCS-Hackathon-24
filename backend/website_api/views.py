@@ -54,8 +54,29 @@ def getArticle(request):
     body = json.loads(body_unicode)
 
     article_id = body['id']
+    print(article_id)
     article = SimpleArticle.objects.get(id=article_id)    
     
     serialized = SimpleArticleSerializer(article, many=False)
+
+    return JsonResponse(serialized.data, safe=False)
+
+
+
+@api_view(['POST'])
+def getAlternativeArticle(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+
+    article_id = body['id']
+    simple_type = body['simple_type']
+    article = SimpleArticle.objects.get(id=article_id)
+
+    alt_article = SimpleArticle.objects.filter(original_article=article.original_article, simple_type=simple_type)
+
+    print(alt_article)
+    alt_article = alt_article[0]
+    
+    serialized = SimpleArticleSerializer(alt_article, many=False)
 
     return JsonResponse(serialized.data, safe=False)

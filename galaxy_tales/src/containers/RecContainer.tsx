@@ -1,21 +1,15 @@
 interface Props {
-  title?: string;
-  content?: string;
-  id?: number;
-  simple_type?: string;
-  onClick: (id: number, simple_type: string) => void;
+  title: string;
+  content: string;
+  id: number;
+  simple_type: string;
+  onClick: (id: number) => void;
 }
 
-const RecContainer = ({ title, content, ageGroup, id, onClick }: Props) => {
-  id = id ? id : -1;
-  title = title ? title : 'Place holder title';
-  content = content
-    ? content
-    : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, quaerat ex. Maiores, esse, libero itaque iure ab magnam laboriosam aut adipisci perferendis quisquam quod qui tempore perspiciatis consequatur impedit praesentium!';
-
+const RecContainer = ({ title, content, simple_type, id, onClick }: Props) => {
   return (
     <div
-      className={`reccontainer rounded mt-3 p-2 ${ageGroup}`}
+      className={`reccontainer rounded mt-3 p-2 ${simple_type}`}
       onClick={() => {
         onClick(id);
       }}

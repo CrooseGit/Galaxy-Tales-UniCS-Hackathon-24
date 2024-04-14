@@ -16,15 +16,8 @@ interface fullArticle {
   image_url: string;
 }
 
-interface snippetArticle {
-  id: number;
-  simple_type: string;
-  title: string;
-  content: string;
-}
-
 function App() {
-  const [ageGroup, setAgeGroup] = useState("primary");
+  const [ageGroup, setAgeGroup] = useState('primary');
   const [currentArticle, setCurrentArticle] = useState<fullArticle>({
     id: 58,
     title: 'title',
@@ -47,7 +40,7 @@ function App() {
       image_url: 'string',
     },
     {
-      id: -1,
+      id: 58,
       title: 'title',
       simple_type: 'string',
       content: 'string',
@@ -57,7 +50,7 @@ function App() {
       image_url: 'string',
     },
     {
-      id: -1,
+      id: 58,
       title: 'title',
       simple_type: 'string',
       content: 'string',
@@ -67,7 +60,6 @@ function App() {
       image_url: 'string',
     },
   ]);
-  const [simple_type, setSimple_type] = useState('secondary');
 
   useEffect(() => {
     getRecentArticle();
@@ -75,6 +67,10 @@ function App() {
   useEffect(() => {
     getNextArticles(3);
   }, [currentArticle]);
+
+  useEffect(() => {
+    getAlternativeArticle(currentArticle.id, ageGroup);
+  }, [ageGroup]);
 
   const getArticle = (id: number) => {
     console.log('getArticle');
@@ -99,11 +95,35 @@ function App() {
       });
   };
 
+  const getAlternativeArticle = (id: number, simple_type: string) => {
+    console.log('getAlternativeArticle');
+    axios
+      .post('http://127.0.0.1:8000/website_api/getAlternativeArticle/', {
+        id: id,
+        simple_type: simple_type,
+      })
+      .then((response) => {
+        setCurrentArticle({
+          id: response.data.id,
+          simple_type: response.data.simple_type,
+          title: response.data.title,
+          content: response.data.content,
+          date_pub: response.data.date_pub,
+          source_url: response.data.source_url,
+          author: response.data.author,
+          image_url: response.data.image_url,
+        });
+      })
+      .catch((error: any) => {
+        console.log('error ', error);
+      });
+  };
+
   const getRecentArticle = () => {
     console.log('getRecentArticle');
     axios
       .post('http://127.0.0.1:8000/website_api/getRecentArticle/', {
-        simple_type: simple_type,
+        simple_type: ageGroup,
       })
       .then((response: any) => {
         console.log(response);
@@ -136,48 +156,36 @@ function App() {
       })
       .catch((error: any) => {
         console.log('error ', error);
-      })
-  };
-  
-  const getRecommendations = (article: number) => {
-    console.log(article);
-    return [
-      { title: 'The Absolute Gall of this Rover', content: '' },
-      { title: '', content: '' },
-      { title: '', content: '' },
-    ];
+      });
   };
 
-  const backgroundclr = "bg-" + ageGroup
-  console.log(backgroundclr)
+  const backgroundclr = 'bg-' + ageGroup;
+  console.log(backgroundclr);
 
   return (
     <>
-      <body>
-        <NavBar setAgeGroup={setAgeGroup} ageGroup={ageGroup} />
-        <div className='d-flex cont'>
-          <div className={`article rounded m-3 p-3 ${ageGroup}`}>
-            <div className='text-center'>
-              <img src={imgplace} className='rounded mb-3'></img>
-            </div>
-            <h1>Placeholder Title</h1>
-            <p className='articletxt'>
-              Lorem ipsum dolor sit amet. Et reprehenderit voluptate ut
-              voluptatem dolores et voluptatem repellendus ea eveniet veniam id
-              ullam placeat. Et explicabo earum et eaque rerum ad omnis autem in
-              rerum eaque non error velit id natus quos ut aliquam eligendi? Ut
-              galisum omnis ut itaque deserunt vel voluptas iure.
-            </p>
+      <NavBar setAgeGroup={setAgeGroup} ageGroup={ageGroup} />
+      <div className='d-flex cont'>
+        <div className={`article rounded m-3 p-3 ${ageGroup}`}>
+          <div className='text-center'>
+            <img src={currentArticle.image_url} className='rounded mb-3'></img>
           </div>
-          <div className='w-50 h-100 d-flex flex-column'>
-            {getRecommendations(0).map(
-              (article: { title: string; content: string }) => (
-                <RecContainer title={article.title} content={article.content} ageGroup={ageGroup}/>
-              )
-            )}
-          </div>
+          <h1>{currentArticle.title}</h1>
+          <p className='articletxt'>{currentArticle.content}</p>
         </div>
-        </body>
+        <div className='w-50 h-100 d-flex flex-column'>
+          {nextArticles.map((article: fullArticle, index) => (
+            <RecContainer
+              title={article.title}
+              content={article.content}
+              simple_type={article.simple_type}
+              onClick={(id) => getArticle(id)}
+              key={'article' + index}
+              id={article.id}
+            />
+          ))}
+        </div>
+      </div>
     </>
   );
 }
