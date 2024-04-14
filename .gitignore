@@ -1,2 +1,6 @@
 API_KEY.json
 galaxy_tales/node_modules
+node_modules/*
+*.pyc
+node_modules/@babel/*
+backend/backend/__pycache__/*.pyc

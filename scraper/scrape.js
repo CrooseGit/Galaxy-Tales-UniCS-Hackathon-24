@@ -84,7 +84,7 @@ const process = async (urls) => {
     console.log(listOfStrings); // working fine...
 
     const data = [];
-    for (let item = 0; item < 2; item++) {
+    for (let item = 0; item < listOfStrings.length; item++) {
       await delay(1000);
       const page = await scrapeSite(listOfStrings[item]);
       const id = item;
@@ -99,9 +99,8 @@ const process = async (urls) => {
         content: results[4],
       });
     }
-    // if (data !== "") {
-    //   return data;
-    // }
+    // console.log(data);
+    await Bun.write("data.json", JSON.stringify(data));
     return data;
   } catch (error) {
     console.log("error: ", error);
@@ -110,8 +109,8 @@ const process = async (urls) => {
 
 let mainURLs = [
   "https://spacenews.com/section/news-archive/",
-  // "https://spacenews.com/section/news-archive/page/2/",
-  // "https://spacenews.com/section/news-archive/page/3/",
+  "https://spacenews.com/section/news-archive/page/2/",
+  "https://spacenews.com/section/news-archive/page/3/",
 ];
 
 // const scrapeData = process(mainURLs);
@@ -127,52 +126,14 @@ let mainURLs = [
 // }
 
 const mainuu = await process(mainURLs);
+// const jsonData = JSON.stringify(mainuu);
+// const blob = new Blob([jsonData], { type: "text/plain" });
+// await Bun.write("data.txt", blob);
 console.log(mainuu);
+// await Bun.write("data.json", JSON.stringify(mainuu));
+// console.log(mainuu);
 
-mainuu.forEach(async (data) => {
-  const requestData = {
-    title: data.title,
-    pub_date: data.releasedDate,
-    source_url: data.url,
-    author: data.author,
-    content: data.content,
-    image_url: data.photoURL,
-  };
-
-  const res = await fetch("http://127.0.0.1:8000/articles_api/addRawArticle/", {
-    method: "POST",
-    headers: {
-      CSRF_COOKIE: "wy2qXFJY0n96hpAMo6xSJwRfRaqDEqgg",
-    },
-    body: JSON.stringify(requestData),
-  });
-  console.log(res.status);
-});
-
-// const scrapeData = process(mainURLs).then((result) => {
-//   for (const data of result) {
-//     const requestData = {
-//       title: data.title,
-//       pub_date: data.releasedDate,
-//       source_url: data.url,
-//       author: data.author,
-//       content: data.content,
-//       image_url: data.photoURL,
-//     };
-//     console.log("Data: ", data.title);
-
-//     axios
-//       .post("http://127.0.0.1:8000/articles_api/addRawArticle", requestData)
-//       .then((response) => {
-//         console.log(response.status);
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//       });
-//   }
-// }); //: ScrapeData[]
-
-// for (const data of scrapeData) {
+// mainuu.forEach(async (data) => {
 //   const requestData = {
 //     title: data.title,
 //     pub_date: data.releasedDate,
@@ -182,21 +143,23 @@ mainuu.forEach(async (data) => {
 //     image_url: data.photoURL,
 //   };
 
-//   axios
-//     .post("http://10.205.87.190:8000/articles_api/addRawArticle", requestData)
-//     .then((response) => {
-//       console.log(response.data);
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// }
+//   const res = await fetch("http://127.0.0.1:8000/articles_api/addRawArticle/", {
+//     method: "POST",
+//     headers: {
+//       CSRF_COOKIE: "wy2qXFJY0n96hpAMo6xSJwRfRaqDEqgg",
+//     },
+//     body: JSON.stringify(requestData),
+//   });
+//   console.log(res.status);
+// });
 
-// title = models.TextField()
-//     pub_date = models.DateTimeField()
-//     source_url = models.URLField()
-//     author= models.TextField()
-//     content = models.TextField()
-//     image_url = models.URLField()
+// http://127.0.0.1:8000/admin/articles_api/rawarticle/
+
+// 403: Forbidden (CSRF cookie not set.): /articles_api/addRawArticle/ ?
 
 // http://10.205.87.190:8000/articles_api/addRawArticle
+
+// => backend
+// (run:) python manage.py runserver (login: jck,1234)
+// (response:)  Django version 5.0.4, using settings 'backend.settings'
+//              Starting development server at http://127.0.0.1:8000/
