@@ -1,9 +1,10 @@
 interface Props {
   title?: string;
   content?: string;
+  ageGroup?: string;
 }
 
-const RecContainer = ({ title, content }: Props) => {
+const RecContainer = ({ title, content, ageGroup }: Props) => {
   if (title == null || title == '') {
     title = 'This is a sample title';
   }
@@ -11,8 +12,10 @@ const RecContainer = ({ title, content }: Props) => {
     content =
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, quaerat ex. Maiores, esse, libero itaque iure ab magnam laboriosam aut adipisci perferendis quisquam quod qui tempore perspiciatis consequatur impedit praesentium!';
   }
+
+
   return (
-    <div className='reccontainer rounded mt-3 p-2'>
+    <div className={`reccontainer rounded mt-3 p-2 ${ageGroup}`}>
       <h2>{title}</h2>
       <p>
         {content.substring(0, content.length < 200 ? content.length - 1 : 199) +

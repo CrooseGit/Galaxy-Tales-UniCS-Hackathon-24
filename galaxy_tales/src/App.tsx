@@ -1,9 +1,12 @@
 import './styles.css';
+import { useState, useEffect } from 'react';
 import imgplace from './assets/plchldr.jpeg';
 import NavBar from './containers/NavBar';
 import RecContainer from './containers/RecContainer';
 
 function App() {
+  const [ageGroup, setAgeGroup] = useState("primary");
+  
   const getRecommendations = (article: number) => {
     console.log(article);
     return [
@@ -13,12 +16,15 @@ function App() {
     ];
   };
 
+  const backgroundclr = "bg-" + ageGroup
+  console.log(backgroundclr)
+
   return (
     <>
       <body>
-        <NavBar />
+        <NavBar setAgeGroup={setAgeGroup} ageGroup={ageGroup} />
         <div className='d-flex cont'>
-          <div className='article rounded m-3 p-3'>
+          <div className={`article rounded m-3 p-3 ${ageGroup}`}>
             <div className='text-center'>
               <img src={imgplace} className='rounded mb-3'></img>
             </div>
@@ -31,10 +37,10 @@ function App() {
               galisum omnis ut itaque deserunt vel voluptas iure.
             </p>
           </div>
-          <div className='w-50 d-flex flex-column'>
+          <div className='w-50 h-100 d-flex flex-column'>
             {getRecommendations(0).map(
               (article: { title: string; content: string }) => (
-                <RecContainer title={article.title} content={article.content} />
+                <RecContainer title={article.title} content={article.content} ageGroup={ageGroup}/>
               )
             )}
           </div>

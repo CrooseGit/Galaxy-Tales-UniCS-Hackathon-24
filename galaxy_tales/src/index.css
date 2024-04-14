@@ -1,4 +1,7 @@
 body {
-  background-color: #533a71;
   font-family: 'Arial', sans-serif;
+}
+
+html {
+  background-color: aqua;
 }
