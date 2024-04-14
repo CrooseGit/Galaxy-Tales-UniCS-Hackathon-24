@@ -4,17 +4,10 @@ interface Props {
   id: number;
   simple_type: string;
   onClick: (id: number) => void;
+  ageGroup: string;
 }
 
-const RecContainer = ({
-  title,
-  content,
-  simple_type,
-  id,
-  onClick,
-  ageGroup,
-}: Props) => {
-  console.log(simple_type);
+const RecContainer = ({ title, content, id, onClick, ageGroup }: Props) => {
   return (
     <div
       className={`reccontainer rounded mt-3 p-2 ${ageGroup}`}
