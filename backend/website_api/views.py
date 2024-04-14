@@ -41,10 +41,12 @@ def getNextArticles(request):
     if next_article.count() < quantity:
         quantity = next_article.count()
 
-
-    next_article = next_article[:quantity]
+    if next_article.count() == 0:
+        next_article = []
+    else:
+        next_article = next_article[:quantity]
+        serialized = SimpleArticleSerializer(next_article, many=True)
     
-    serialized = SimpleArticleSerializer(next_article, many=True)
 
     return JsonResponse(serialized.data, safe=False)
 

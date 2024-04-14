@@ -12,7 +12,7 @@ const NavBar = ({ setAgeGroup, ageGroup }) => {
     >
       <a
         className={`navbar-brand navtxt${ageGroup} navcon nav${ageGroup}`}
-        href='#'
+        href=''
       >
         <img src={logoimg} className='img-fluid w-25 navcon'></img>Galaxy Tales
       </a>
