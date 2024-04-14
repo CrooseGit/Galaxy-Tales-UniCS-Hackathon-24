@@ -6,7 +6,7 @@ interface Props {
   onClick: (id: number, simple_type: string) => void;
 }
 
-const RecContainer = ({ title, content, id, onClick }: Props) => {
+const RecContainer = ({ title, content, ageGroup, id, onClick }: Props) => {
   id = id ? id : -1;
   title = title ? title : 'Place holder title';
   content = content
@@ -15,7 +15,7 @@ const RecContainer = ({ title, content, id, onClick }: Props) => {
 
   return (
     <div
-      className='reccontainer rounded mt-3 p-2'
+      className={`reccontainer rounded mt-3 p-2 ${ageGroup}`}
       onClick={() => {
         onClick(id);
       }}

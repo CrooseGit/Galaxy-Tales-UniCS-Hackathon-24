@@ -4,7 +4,6 @@ import imgplace from './assets/plchldr.jpeg';
 import NavBar from './containers/NavBar';
 import RecContainer from './containers/RecContainer';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
 
 interface fullArticle {
   id: number;
@@ -25,6 +24,7 @@ interface snippetArticle {
 }
 
 function App() {
+  const [ageGroup, setAgeGroup] = useState("primary");
   const [currentArticle, setCurrentArticle] = useState<fullArticle>({
     id: 58,
     title: 'title',
@@ -136,8 +136,8 @@ function App() {
       })
       .catch((error: any) => {
         console.log('error ', error);
-      });
-  const [ageGroup, setAgeGroup] = useState("primary");
+      })
+  };
   
   const getRecommendations = (article: number) => {
     console.log(article);
@@ -177,7 +177,7 @@ function App() {
             )}
           </div>
         </div>
-      </div>
+        </body>
     </>
   );
 }
